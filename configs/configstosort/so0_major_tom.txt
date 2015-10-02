@@ -1,0 +1,35 @@
+"The Walkabout"
+{
+	"classes"
+	{
+		"sniper"	"0"
+	}
+	"baseclass"		"sniperrifle"
+	"baseindex"		"14"
+	"logname"		"walkabout"
+	"steamids"		"STEAM_0:0:17402999"
+	"description"	"Combo system: damage increases for every hit, third hit will be a critical hit and reset the combo\nCombo is reset upon missing\nHitting buildings does not reset your combo\nNo power charge\nNo headshots\n-10% slower firing speed"
+	"attributes"
+	{
+		"meet the sniper combo"
+		{
+			"plugin"	"chdata-attributes"
+			"value"		"0.3 0.65 3.0"
+		}
+		"sniper no headshots"
+		{
+			"plugin"	"tf2attributes"
+			"value"		"1"
+		}
+		"SRifle Charge rate decreased"
+		{
+			"plugin"	"tf2attributes"
+			"value"		"0.0"
+		}
+		"fire rate penalty"
+		{
+			"plugin"	"tf2attributes"
+			"value"		"1.1"
+		}
+	}
+}
