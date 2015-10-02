@@ -1,0 +1,60 @@
+"Maxine"
+{
+	"classes"
+	{
+		"heavy"		"0"
+	}
+	"baseclass"		"minigun"
+	"baseindex"		"15"
+	"logname"		"maxine"
+	"killicon"		"minigun"
+	"steamids"      "STEAM_0:0:17402999,STEAM_0:0:16547001"
+	"description"	"-From Advanced Weaponiser 2-\n \nMove at near normal speed while deployed\n10 ammo consumed per second while deployed\n15% slower spin up time\n-25% damage penalty\nNo ammo from dispensers while active"
+	"attributes"
+	{
+	// minigun no spin sounds
+		"aiming movespeed increased"
+		{
+			"plugin"	"tf2attributes"
+			"value"		"1.75"
+		}
+        "uses ammo while aiming"
+		{
+			"plugin"	"tf2attributes"
+			"value"		"10"
+		}
+        "minigun spinup time increased"
+		{
+			"plugin"	"tf2attributes"
+			"value"		"1.15"
+		}
+        "damage penalty"
+		{
+			"plugin"	"tf2attributes"
+			"value"		"0.75"
+		}
+        "no primary ammo from dispensers while active"
+		{
+			"plugin"	"tf2attributes"
+			"value"		"1"
+		}
+	}
+	"sound"
+	{
+		"player"
+		{
+			"find"		"weapons/minigun_spin.wav"
+			"replace"	"vehicles/v8/fourth_cruise_loop2.wav"
+		}
+		"player"
+		{
+			"find"		"weapons/minigun_wind_up.wav"
+			"replace"	"vehicles/v8/v8_rev_short_loop1.wav"
+		}
+		"player"
+		{
+			"find"		"weapons/minigun_wind_down.wav"
+			"replace"	"vehicles/v8/v8_stop1.wav"
+		}
+	}
+}

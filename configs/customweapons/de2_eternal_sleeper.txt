@@ -1,0 +1,49 @@
+"The Eternal Sleeper"
+{
+    "classes"
+    {
+        "demoman"   "2"
+    }
+    "baseclass"     "saxxy"
+    "baseindex"     "264"
+    "logname"       "eternal_sleeper"
+    "nobots"        "1"
+    "steamids"      "STEAM_0:0:17402999,STEAM_0:1:20416791"
+    "description"   "-From Advanced Weaponiser 2-\n \n100% critical hit vs charging demoman\n25% faster weapon switch\n33% longer melee range\nNo random critical hits\n50% less damage\n \n \nCredit:\nGeneral Stat Sugguestion\n-Advanced Weaponiser\nCustom Attribute\n-Theray070696\nModel\n-Ertz"
+    "attributes"
+    {
+        "crit charging players"
+        {
+            "plugin"    "advanced-weaponiser-2-attributes"
+            "value"     "1"
+        }
+        "deploy time decreased"
+        {
+            "plugin"    "tf2attributes"
+            "value"     "0.8"
+        }
+        "melee range multiplier"
+        {
+            "plugin"    "tf2attributes"
+            "value"     "1.33"
+        }
+        "damage penalty"
+        {
+            "plugin"    "tf2attributes"
+            "value"     "0.5"
+        }
+        "crit mod disabled"
+        {
+            "plugin"    "tf2attributes"
+            "value"     "0"
+        }
+    }
+    "viewmodel"
+    {
+        "modelname"     "models/advancedweaponiser/c_mordredsmace/c_mordredsmace.mdl"
+    }
+    "worldmodel"
+    {
+        "modelname"     "models/advancedweaponiser/c_mordredsmace/c_mordredsmace.mdl"
+    }
+}

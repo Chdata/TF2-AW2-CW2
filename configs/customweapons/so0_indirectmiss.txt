@@ -1,0 +1,31 @@
+"The Indirect Miss"
+{
+	"classes"
+	{
+		"soldier"		"0"
+	}
+	"baseclass"		"rocketlauncher_directhit"
+	"baseindex"		"127"
+	"nobots"		"1"
+	"logname"		"indirect_miss"
+	"killicon"		"tf_projectile_rocket"
+	"description"	"-From Advanced Weaponiser 2-\n \n+70% explosion radius\n-25% damage penalty\n-80% projectile speed"
+	"attributes"
+	{
+		"Blast radius increased"
+		{
+			"plugin"	"tf2attributes"
+			"value"		"1.7"
+		}
+		"damage penalty"
+		{
+			"plugin"	"tf2attributes"
+			"value"		"0.75"
+		}
+		"Projectile speed decreased"
+		{
+			"plugin"	"tf2attributes"
+			"value"	"0.2"
+		}
+	}
+}

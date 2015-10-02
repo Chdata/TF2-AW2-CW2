@@ -1,0 +1,53 @@
+"The Penetrator"
+{
+	"classes"
+	{
+		"sniper"	"0"
+	}
+	"baseclass"		"compound_bow"
+	"baseindex"		"1092"
+	"mag"			"1"
+	"ammo"			"12"
+	"logname"		"penetrator"
+	"killicon"		"huntsman"
+	"steamids"		"STEAM_0:0:17402999"
+	"description"	"-From Advanced Weaponiser 2-\n \nProjectiles penetrate enemy players\nProjectiles can bounce once\nNo headshots"
+	"attributes"
+	{
+		"projectile penetration"
+		{
+			"plugin"	"tf2attributes"
+			"value"		"1"
+		}
+		"projectiles bounce"
+		{
+			"plugin"	"advanced-weaponiser-2-attributes"
+			"value"		"1"
+		}
+		"sniper no headshots"
+		{
+			"plugin"	"tf2attributes"
+			"value"		"1"
+		}
+        "hidden primary max ammo bonus"
+		{
+			"plugin"	"tf2attributes"
+			"value"	"0.5"
+		}
+		"disable fancy class select anim"
+		{
+			"plugin"	"tf2attributes"
+			"value"	"1"
+		}
+		"special taunt"
+		{
+			"plugin"	"tf2attributes"
+			"value" "1"
+		}
+		"allowed in medieval mode"
+		{
+			"plugin"	"tf2attributes"
+			"value"	"1"
+		}
+	}
+}

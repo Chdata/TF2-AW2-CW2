@@ -1,0 +1,22 @@
+"The Stab-n-Away"
+{
+	"classes"
+	{
+		"spy"		"2"
+	}
+    
+	"baseclass"		"knife"
+	"baseindex"		"461"
+	"logname"		"stab_n_away"
+	"steamids"		"STEAM_0:0:17402999"
+	"description"	"-From Advanced Weaponiser 2-\n \nInstantly cloaks upon backstab"
+    
+	"attributes"
+	{
+		"fastcloak on backstab"
+		{
+			"plugin"	"advanced-weaponiser-2-attributes"
+			"value"		"1"
+		}
+	}
+}

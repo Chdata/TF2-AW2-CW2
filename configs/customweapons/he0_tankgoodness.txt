@@ -1,0 +1,36 @@
+"Tank Goodness"
+{
+	"classes"
+	{
+		"heavy"		"0"
+	}
+	"baseclass"		"minigun"
+	"baseindex"		"850"
+	"logname"		"tank_goodness"
+	"killicon"		"minigun"
+	"steamids"		"STEAM_0:0:19610706"
+	"description"	"-From Advanced Weaponiser 2-\n \n+100 max health on wearer\nDamage taken upgrades the weapon up to 4 times\n33% of damage taken by nearby teammates is applied to you instead\n-75% damage penalty"
+	"attributes"
+	{
+		"weapon lvlup 2"
+		{
+			"plugin"	"moreaw2"
+			"value"		"50.0 0.25 0.75 1.0 5 0 0.45"
+		}
+		"share damage"
+		{
+			"plugin"	"advanced-weaponiser-2-attributes"
+			"value"		"450 0.33"
+		}
+        "damage penalty"
+		{
+			"plugin"	"tf2attributes"
+			"value"		"0.25"
+		}
+        "max health additive bonus"
+		{
+			"plugin"	"tf2attributes"
+			"value"		"100"
+		}
+	}
+}

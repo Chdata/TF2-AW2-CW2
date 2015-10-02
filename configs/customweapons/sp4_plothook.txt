@@ -1,0 +1,19 @@
+"The Plot Hook"
+{
+	"classes"
+	{
+		"spy"		"4"
+	}
+	"baseclass"		"invis"
+	"baseindex"		"30"
+	"steamids"		"STEAM_0:0:17402999"
+	"description"	"-From Advanced Weaponiser 2-\n \nCloak hooks player to wall or ceiling"
+	"attributes"
+	{
+		"cloak is hook"
+		{
+			"plugin"	"advanced-weaponiser-2-attributes"
+			"value"		"1"
+		}
+	}
+}
