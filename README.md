@@ -9,6 +9,12 @@ Rebalancing ideas of our own will not be included - modify these configs on your
 All weapon config's descriptions will be credited, with Self-Made support for the creators.
 Configs will be set up for the original models they used, if available, and if we agree that the model isn't too "screwy".
 
+We also intend to make all attribute ports as flexible as possible.
+
+For example:
+"meet the sniper combo"                       // Sniper Rifle is "The Walkabout"
+// %f %f %f - Multipliers for each hit in the combo (default is 0.35 0.6 3.0)
+
 <hr>
 
 AW2 Source:
