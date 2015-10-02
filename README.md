@@ -11,6 +11,9 @@ Configs will be set up for the original models they used, if available, and if w
 
 <hr>
 
+AW2 Source:
+http://mechatheslag.net/advancedweaponiser/downloads/aw2plugin.zip
+
 Lists of AW2 Weapons:
 https://wiki.teamfortress.com/wiki/Advanced_Weaponiser
 http://advancedweaponiser.wikia.com/wiki/Category:Weapon
