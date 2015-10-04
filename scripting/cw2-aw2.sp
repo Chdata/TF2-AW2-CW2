@@ -7,6 +7,8 @@
 
 #include <chdata>
 
+#include aw2/attributes.inc
+
 #define PLUGIN_VERSION "0x01"
 
 public Plugin:myinfo = {
@@ -32,22 +34,6 @@ public Plugin:myinfo = {
 #define STEAMID_GAGE            "STEAM_0:1:7484070"
 #define STEAMID_SVDL            "STEAM_0:0:16547001"
 
-// Attribute related vars
-
-//#define SOUND_1016_A                        "physics/surfaces/underwater_impact_bullet1.wav"
-//#define SOUND_1016_B                        "physics/surfaces/underwater_impact_bullet2.wav"
-//#define SOUND_1016_C                        "physics/surfaces/underwater_impact_bullet3.wav"
-
-#define SFX_SNIPER_COMBO_1016_1A                "AdvancedWeaponiser/walkabout_combo_1a.wav"
-#define SFX_SNIPER_COMBO_1016_1B                "AdvancedWeaponiser/walkabout_combo_1b.wav"
-#define SFX_SNIPER_COMBO_1016_2                 "AdvancedWeaponiser/walkabout_combo_2.wav"
-#define SFX_SNIPER_COMBO_1016_3                 "AdvancedWeaponiser/walkabout_combo_3.wav"
-
-static bool:g_bHasSniperCombo1016[TF_MAX_PLAYERS][3];
-static g_iSniperCombo1016[TF_MAX_PLAYERS][3];
-static bool:g_iSniperComboHit1016[TF_MAX_PLAYERS][3];
-static Float:g_flSniperComboMult1016[TF_MAX_PLAYERS][3][3]; // Slot, multiplier
-
 public OnMapStart()
 {
     for (new iClient = 1; iClient <= MaxClients; iClient++)
@@ -66,17 +52,22 @@ public OnMapStart()
         } 
     }
 
-    PrepareSound(SFX_SNIPER_COMBO_1016_1A);
-    PrepareSound(SFX_SNIPER_COMBO_1016_1B);
-    PrepareSound(SFX_SNIPER_COMBO_1016_2);
-    PrepareSound(SFX_SNIPER_COMBO_1016_3);
+    Attribute_1016_Precache();
+    Attribute_1160_Precache();
 }
 
 public OnClientPostAdminCheck(iClient)
 {
-    //SDKHook(iClient, SDKHook_PostThinkPost, OnClientPostThinkPost);
+    SDKHook(iClient, SDKHook_PostThinkPost, OnClientPostThinkPost);
     SDKHook(iClient, SDKHook_OnTakeDamage, OnTakeDamage_Player);
     //SDKHook(client, SDKHook_WeaponSwitch, OnWeaponSwitch);
+}
+
+public Action:CustomWeaponsTF_PreWeaponSpawned(iClient, iSlot)
+{
+    // All of these values are reset before CustomWeaponsTF_OnAddAttribute() is called
+    Attribute_1016_OnInventory(iClient, iSlot);
+    Attribute_1160_OnInventory(iClient, iSlot);
 }
 
 public Action:CustomWeaponsTF_OnAddAttribute(iWeapon, iClient, const String:szAttribName[], const String:szSubPlugin[], const String:szValue[])
@@ -98,6 +89,10 @@ public Action:CustomWeaponsTF_OnAddAttribute(iWeapon, iClient, const String:szAt
         g_flSniperComboMult1016[iClient][iSlot][0] = StringToFloat(szExplode[0]);
         g_flSniperComboMult1016[iClient][iSlot][1] = StringToFloat(szExplode[1]);
         g_flSniperComboMult1016[iClient][iSlot][2] = StringToFloat(szExplode[2]);
+    }
+    else if (StrEqual(szAttribName, "inactivity drains rage"))
+    {
+        g_flRageDrainWhenInactiveFor[iClient] = StringToFloat(szValue);
     }
     else
     {
@@ -163,6 +158,11 @@ public Action:OnTakeDamage_Player(iVictim, &iAtker, &iInflictor, &Float:flDamage
     return aReturn;
 }
 
+public OnClientPostThinkPost(iClient)
+{
+    Attribute_1160_Prethink(iClient);
+}
+
 public Action:OnTakeDamage_Main(iVictim, &iAtker, &iInflictor, &Float:flDamage, &iDmgType, &iWeapon, Float:vDmgForce[3], Float:vDmgPos[3], iDmgCustom,
     iAtkSlot, bool:bBuilding)
 {
@@ -171,98 +171,19 @@ public Action:OnTakeDamage_Main(iVictim, &iAtker, &iInflictor, &Float:flDamage, 
         return Plugin_Continue;
     }
 
-    if (iAtkSlot != -1 && g_bHasSniperCombo1016[iAtker][iAtkSlot] && iAtker != iVictim && flDamage > 0.0)
-    {
-        g_iSniperComboHit1016[iAtker][iAtkSlot] = true;
+    new Action:aReturn = Plugin_Continue;
 
-        if (bBuilding)
-        {
-            return Plugin_Continue;
-        }
+    ActionApply(aReturn, Attribute_1016_OnTakeDamage(iVictim, iAtker, iInflictor, flDamage, iDmgType, iWeapon, vDmgForce, vDmgPos, iDmgCustom, iAtkSlot, bBuilding));
+    ActionApply(aReturn, Attribute_1160_OnTakeDamage(iVictim, iAtker, iInflictor, flDamage, iDmgType, iWeapon, vDmgForce, vDmgPos, iDmgCustom, iAtkSlot, bBuilding));
 
-        g_iSniperCombo1016[iAtker][iAtkSlot]++;
-        
-        decl String:szSound[PLATFORM_MAX_PATH];
-        strcopy(szSound, sizeof(szSound), SFX_SNIPER_COMBO_1016_1A);
-        
-        if (g_iSniperCombo1016[iAtker][iAtkSlot] <= 1)
-        {
-            if (GetRandomInt(0, 1))
-            {
-                strcopy(szSound, sizeof(szSound), SFX_SNIPER_COMBO_1016_1B);
-            }
-            flDamage *= g_flSniperComboMult1016[iAtker][iAtkSlot][0];
-        }
-        else if (g_iSniperCombo1016[iAtker][iAtkSlot] == 2)
-        {
-            strcopy(szSound, sizeof(szSound), SFX_SNIPER_COMBO_1016_2);
-            flDamage *= g_flSniperComboMult1016[iAtker][iAtkSlot][1];
-        }
-        else if (g_iSniperCombo1016[iAtker][iAtkSlot] >= 3)
-        {
-            strcopy(szSound, sizeof(szSound), SFX_SNIPER_COMBO_1016_3);
-            iDmgType |= DMG_CRIT;
-            flDamage *= g_flSniperComboMult1016[iAtker][iAtkSlot][2];
-            g_iSniperCombo1016[iAtker][iAtkSlot] = 0;
-        }
-
-        if (ShouldReveal(iVictim))
-        {
-            EmitSoundToClient(iAtker, szSound);
-        }
-
-        return Plugin_Changed;
-    }
-
-    return Plugin_Continue;
-}
-
-stock bool:IsDisguised(iClient)
-{
-    new TFClassType:iClass = TFClassType:GetEntProp(iClient, Prop_Send, "m_nDisguiseClass");
-    return (iClass != TFClass_Unknown);
-}
-
-stock bool:ShouldReveal(iClient)
-{
-    if (TF2_IsPlayerInCondition(iClient, TFCond_Cloaked))
-    {
-        return true;
-    }
-
-    if (IsDisguised(iClient))
-    {
-        return false;
-    }
-
-    return true;
+    return aReturn;
 }
 
 public Action:TF2_CalcIsAttackCritical(iClient, iWeapon, String:szWeaponNAme[], &bool:bResult)
 {
     new iSlot = GetSlotFromPlayerWeapon(iClient, iWeapon);
-    if (iSlot != -1 && g_iSniperCombo1016[iClient][iSlot] > 0)
-    {
-        g_iSniperComboHit1016[iClient][iSlot] = false;
 
-        new Handle:hData = CreateDataPack();
-        WritePackCell(hData, iClient);
-        WritePackCell(hData, iSlot);
-        RequestFrame(Frame_Attribute_1016_Expire, hData);
-    }
-}
-
-public Frame_Attribute_1016_Expire(any:Pack)
-{
-    ResetPack(Handle:Pack);
-    new iClient = ReadPackCell(Handle:Pack);
-    new iSlot = ReadPackCell(Handle:Pack);
-    CloseHandle(Handle:Pack);
-    
-    if (!g_iSniperComboHit1016[iClient][iSlot])
-    {
-        g_iSniperCombo1016[iClient][iSlot] = 0;
-    }
+    Attribute_1016_OnAttack(iClient, iSlot, bResult);
 }
 
 public OnEntityCreated(iEnt, const String:szClassname[])
@@ -287,15 +208,5 @@ public Action:OnBuildingSpawned(Handle:hTimer, any:iRef)
     if (IsValidEnt(iEnt))
     {
         SDKHook(iEnt, SDKHook_OnTakeDamage, OnTakeDamage_Building);
-    }
-}
-
-public Action:CustomWeaponsTF_PreWeaponSpawned(iClient)
-{
-    // All of these values are reset before CustomWeaponsTF_OnAddAttribute() is called
-    for (new i = 0; i < 3 ; i++)
-    {
-        g_bHasSniperCombo1016[iClient][i] = false;
-        g_iSniperCombo1016[iClient][i] = 0;
     }
 }
